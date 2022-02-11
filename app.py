@@ -5,7 +5,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier 
 from sklearn import metrics
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 import pickle
 
 app = Flask("__name__")
@@ -16,10 +16,17 @@ q = ""
 
 @app.route("/")
 def loadPage():
+	return render_template('index.html', query="")
+
+@app.route("/home")
+def home():
 	return render_template('home.html', query="")
 
+@app.route("/upload_csv")
+def upload_csv():
+	return render_template('upload_csv.html', query="")
 
-@app.route("/", methods=['POST'])
+@app.route("/home", methods=['POST'])
 def predict():
     
     '''
