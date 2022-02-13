@@ -8,7 +8,7 @@ from sklearn import metrics
 from flask import Flask, request, render_template, redirect, url_for
 import pickle
 
-app = Flask("__name__")
+app = Flask("__name__",static_url_path='/static')
 
 df_1=pd.read_csv("first_telc.csv")
 

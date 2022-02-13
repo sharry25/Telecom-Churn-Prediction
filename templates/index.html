@@ -4,18 +4,18 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>HOME</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
 </head>
-<body>
-	<div class="bgimage">
+<body background="{{ url_for('static', filename='Images/tele1.jpg') }}">
+	<div class="bgimage" >
 		<div class="text">
 		<h3>WELCOME</h3>
 		<h1>TELECOM  CHURN  PREDICTION</h1>
-		<button id="button1">Manual Data feed</button>
-		<button id="button2">Upload CSV File</button>
+		<a href=home ><button id="button1">Manual Data Entry</button></a>
+		<a href=csv ><button id="button2">Upload CSV File</button></a>
 	</div> 
 	</div>
-
+<!---->
 	
 	
 </body>
