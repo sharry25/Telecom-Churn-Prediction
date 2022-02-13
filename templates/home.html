@@ -4,21 +4,38 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link href="{{ url_for('static',filename='styles/style_home.css') }}" rel="stylesheet" type="text/css"/>
+  <style>
+	  #col-sm-9{
+		  text-align: center;
+		  color: azure;
+	  }
+  </style>
 </head>
-   <body>
-      <title>Churn Prediction</title>
+	
+<body background="{{ url_for('static', filename='Images/night.png') }}">
+      <!-- <title>Churn Prediction</title> -->
+	  <!--<h1 style= "text-align: center; color: azure; font-size:300%;" > Churn Prediction </h1>-->
+		<div id="outer"></div>
+		<pre>
+
+
+		</pre>
+		<h1 style= "text-align: center; color: rgb(2, 17, 17); font-family: 'Courier New', Courier, monospace;" >Please Enter Your Data Here : </h1>
+		<h1>HI</h1>
+
 	  <div class="container">
 		<div class="row">
-
+		<img src="../static/Images/girl.png" width="450" height="450">
 		  <form action="http://localhost:5000/home" method="POST">
 		  	<div class="col-sm-9">
 			 <div class="form-group  purple-border">
 				  <label for="comment">SeniorCitizen:</label>
-				  <textarea class="form-control" rows="2" id="query1" name="query1" rows="2" cols="5" autofocus>{{query1}}</textarea>
+				  <textarea class="form-control" rows="2" id="query1" name="query1" rows="1" cols="40" autofocus>{{query1}}</textarea>
 			</div>
 			<div class="form-group  purple-border">
 				  <label for="comment">MonthlyCharges:</label>
-				  <textarea class="form-control" rows="2" id="query2" name="query2" rows="2" cols="5" autofocus>{{query2}}</textarea>
+				  <textarea class="form-control" rows="2" id="query2" name="query2" rows="1" cols="5" autofocus>{{query2}}</textarea>
 			</div>
 			<div class="form-group  purple-border">
 				  <label for="comment">TotalCharges:</label>
@@ -89,18 +106,27 @@
 				  <textarea class="form-control" rows="2" id="query19" name="query19" rows="2" cols="5" autofocus>{{query19}}</textarea>
 			</div>
 			</div>
-			<div class="col-sm-3">
+			<div  class="col-sm-3">
 			<button type="submit" class="btn btn-primary" name="submit">SUBMIT</button>
 			</div>
 		  </form>
 		  </div>
 		  
-		<div class="row"> 
+		<div class="row" style="padding-left: 220px;"> 
 			<div class="col-sm-9">
-			<textarea class="form-control" rows="2" id="comment" name="query6" rows="2" cols="5" autofocus>{{output1}}</textarea>
-			<textarea class="form-control" rows="2" id="comment" name="query7" rows="2" cols="5" autofocus>{{output2}}</textarea>
-			</div>
+			<textarea  class="form-control" rows="2" id="comment" name="query6" rows="2" cols="5" autofocus>{{output1}}</textarea>
+			<pre>
+</pre>
+			<textarea  class="form-control" rows="2" id="comment" name="query7" rows="2" cols="5" autofocus>{{output2}}</textarea>
+			<pre>
+
+			</pre>	
+
 		</div>
+		</div>
+		<footer>
+			<p>Created by Computer Department, MVP'S College of Engineering. © 2022</p>
+		</footer>
 	</div>		
    </body>
 </html>
