@@ -1,12 +1,19 @@
 
 # coding: utf-8
 
+#from crypt import methods
 import pandas as pd
+import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier 
 from sklearn import metrics
+import matplotlib.pyplot as plt
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import chi2
 from flask import Flask, request, render_template, redirect, url_for
+import numpy as np
 import pickle
+import os
 
 app = Flask("__name__",static_url_path='/static')
 
@@ -22,9 +29,88 @@ def loadPage():
 def home():
 	return render_template('home.html', query="")
 
-@app.route("/upload_csv")
+@app.route("/upload_csv",methods=['GET','POST'])
 def upload_csv():
-	return render_template('upload_csv.html', query="")
+    if request.method =='POST':
+        file = request.files['csvfile']
+        filepath = os.path.join('static',file.filename)
+        file.save(filepath)
+        telco_base_data = pd.read_csv(filepath)
+        telco_data = telco_base_data.copy()
+        telco_data.TotalCharges = pd.to_numeric(telco_data.TotalCharges, errors='coerce')
+        telco_data.dropna(how = 'any', inplace = True)
+        labels = ["{0} - {1}".format(i, i + 11) for i in range(1, 72, 12)]
+        telco_data['tenure_group'] = pd.cut(telco_data.tenure, range(1, 80, 12), right=False, labels=labels)
+        telco_data.drop(columns= ['customerID','tenure'], axis=1, inplace=True)
+        telco_data['Churn'] = np.where(telco_data.Churn == 'Yes',1,0)
+        telco_data_dummies = pd.get_dummies(telco_data)
+        plt.figure(figsize=(20,8))
+        telco_data_dummies.corr()['Churn'].sort_values(ascending = False).plot(kind='bar')
+        # fig = plt.figure(figsize = (15,20))
+        # ax = fig.gca()
+        # telco_data.hist(ax = ax)
+        # plt.figure(figsize=(20,8))
+        # telco_data_dummies.corr()['Churn'].sort_values(ascending = False).plot(kind='bar')
+        #plt.figure(figsize=(12,12))
+        #sns.heatmap(telco_data_dummies.corr(), cmap="Paired")
+        # plt.plot(df[variable])
+        # X = df.iloc[:,0:20]  #independent columns
+        # y = df.iloc[:,-1]    #target column i.e price range
+
+        # # apply SelectKBest class to extract top 10 best features
+        # bestfeatures = SelectKBest(score_func=chi2, k=10)
+        # fit = bestfeatures.fit(X,y)
+        # dfscores = pd.DataFrame(fit.scores_)
+        # dfcolumns = pd.DataFrame(X.columns)
+
+        # #concat two dataframes for better visualization 
+        # featureScores = pd.concat([dfcolumns,dfscores],axis=1)
+        # featureScores.columns = ['Specs','Score']
+        # plt.figure(figsize=(20,5))
+        # sns.barplot(x='Specs', y='Score', data=featureScores, palette = "GnBu_d")
+        # plt.box(False)
+        # plt.title('Feature importance', fontsize=16)
+        # plt.xlabel('\n Features', fontsize=14)
+        # plt.ylabel('Importance \n', fontsize=14)
+        # plt.xticks(fontsize=12)
+        # plt.yticks(fontsize=12)
+        #plt.show()
+        imagepath = os.path.join('static','feature'+'.png')
+        plt.savefig(imagepath)
+        return render_template('feature.html', image = imagepath) 
+
+    return render_template('upload_csv.html')
+
+# @app.route('/dash',methods = ['GET' , 'POST'])
+# def dash():
+#     if request.method == 'POST':
+#         variable = request.form['variable']
+#         df = pd.read_csv('static/test.csv')
+#         # plt.plot(df[variable])
+#         X = df.iloc[:,0:20]  #independent columns
+#         y = df.iloc[:,-1]    #target column i.e price range
+
+#         # apply SelectKBest class to extract top 10 best features
+#         bestfeatures = SelectKBest(score_func=chi2, k=10)
+#         fit = bestfeatures.fit(X,y)
+#         dfscores = pd.DataFrame(fit.scores_)
+#         dfcolumns = pd.DataFrame(X.columns)
+
+#         #concat two dataframes for better visualization 
+#         featureScores = pd.concat([dfcolumns,dfscores],axis=1)
+#         featureScores.columns = ['Specs','Score']
+#         plt.figure(figsize=(20,5))
+#         sns.barplot(x='Specs', y='Score', data=featureScores, palette = "GnBu_d")
+#         plt.box(False)
+#         plt.title('Feature importance', fontsize=16)
+#         plt.xlabel('\n Features', fontsize=14)
+#         plt.ylabel('Importance \n', fontsize=14)
+#         plt.xticks(fontsize=12)
+#         plt.yticks(fontsize=12)
+#         #plt.show()
+#         imagepath = os.path.join('static','feature'+'.png')
+#         plt.savefig(imagepath)
+#         return render_template('feature.html',image=imagepath)
 
 @app.route("/home", methods=['POST'])
 def predict():
@@ -136,5 +222,12 @@ def predict():
                            query18 = request.form['query18'], 
                            query19 = request.form['query19'])
     
-app.run()
+
+if(__name__=="__main__"):
+    app.run(debug=True)
+        
+        
+
+
+
 
