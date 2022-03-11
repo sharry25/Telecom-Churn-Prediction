@@ -1,5 +1,43 @@
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+	 content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static',filename='styles/style2.css') }}" rel="stylesheet" type="text/css"/>
+    <title>Document</title>
+	<style>
+		body {
+		  background-image: url("https://img.freepik.com/free-vector/blue-globe-digital-grid-technology-corporate-background_53876-100460.jpg?size=664&ext=jpg&ga=GA1.2.1469521697.1643908286");
+		  background-repeat: no-repeat;
+		  background-attachment: fixed;
+		  background-size: cover;
+		}
+	</style>
+</head>
+
+<body >
+
+    <main>
+        <div id="container">
+          <form class="" action="upload_csv" method="post" enctype="multipart/form-data">
+            <!-- <img src="https://bit.ly/2tlJLoz"><br> -->
+            <h3>Upload your file here </h3>
+            <br>
+            <br>
+            <input type="file" name="csvfile" value=""><br>
+            <input type="submit" name="" value="submit"><br>
+            
+            <span><a href="/">Back</a></span>
+          </form>
+        </div>
+        </main>
+
+</body>
+</html>
+
+<!-- <html lang="en">
+<head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,4 +52,4 @@
 		</form>
 	</div>
 </body>
-</html>
+</html> -->
